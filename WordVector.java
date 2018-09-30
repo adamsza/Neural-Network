@@ -2,7 +2,7 @@ package neural;
 
 import java.util.regex.Pattern;
 
-public class WordVector {
+public class WordVector implements Constants{
 	
 	private String word;
 	private double [] vector;
@@ -12,7 +12,7 @@ public class WordVector {
 	}
 	
 	public void makeVector(double pos) {
-			vector = new double [5];
+			vector = new double [WORD_VECTOR];
 			vector[0] = containsLetter();
 			vector[1] = containsNumber();
 			vector[2] = containsCapital();
@@ -67,11 +67,4 @@ public class WordVector {
 		return vector;
 	}
 
-	public void writeSth() {
-		for(int i=0; i<5; i++)
-			System.out.print(vector[i] + "\n");
-		System.out.print(word);
-		System.out.println("\n");
-	}
-	
 }
