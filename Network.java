@@ -1,8 +1,10 @@
 package neural;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Network {
+	private Network_LoadandSave loadsave;
 
 	public int[] layer_sizes;
 	public int output_size;
@@ -41,6 +43,8 @@ public class Network {
 				weights[i] = NetworkTools.createRandomArray(layer_sizes[i],layer_sizes[i-1], 0, 1);
 			}
 		}
+		
+		loadsave = new Network_LoadandSave(layer_sizes);
 	}
 	
 	public double[] calculate(double[] inp)
@@ -107,12 +111,32 @@ public class Network {
 			{
 				double delta = -eta * error_signal[layer][neuron];
 				bias[layer][neuron] += delta;
-				for(int prevneuron = 0; prevneuron < network_size-1; prevneuron++)
+				for(int prevneuron = 0; prevneuron < layer_sizes[layer-1]; prevneuron++)
 				{
 					weights[layer][neuron][prevneuron] += delta * output[layer-1][prevneuron];
 				}
 				
 			}
 		}
+	}
+	
+	public void saveState(String filename) throws IOException
+	{
+		loadsave.save(filename, bias, weights);
+	}
+	
+	public void loadState(String filename) throws IOException
+	{
+		loadsave.load(filename, this);
+	}
+	
+	public void setbias(double[][] new_bias)
+	{
+		bias = new_bias;
+	}
+	
+	public void setweights(double[][][] new_weights)
+	{
+		weights = new_weights;
 	}
 }
