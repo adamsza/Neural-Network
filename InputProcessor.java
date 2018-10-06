@@ -38,16 +38,18 @@ public class InputProcessor implements Constants {
 	public void makeInputVectors(ArrayList<double []> input){
 		
 		double[] out = new double[WORDS_WINDOW*WORD_VECTOR];
-
-		for(int i=0; i<input.size()-(WORDS_WINDOW-1); i++) {
+		System.out.println(input.size());
+		for(int i=0; i<(input.size()-(WORDS_WINDOW-1)); i++) {
 			for(int j=0; j<WORDS_WINDOW; j++) {
 				for(int k=0; k<WORD_VECTOR; k++) {
 					double[] vec = input.get(i);
 					out[(j*WORD_VECTOR)+k] = vec[k];
 				}
-				output.add(out);
+				System.out.println(output.size());
 			}
+			output.add(out);
 		}
+
 	}
 
 }
