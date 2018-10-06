@@ -14,10 +14,10 @@ public class WordProcessor implements Constants{
 	private ArrayList<double[]> vectors;
 	
 	//indexek listája amelyik szavakat kivett
-	private ArrayList<Integer> indexes;
+	private ArrayList<Integer> indices;
 	
 	public WordProcessor(ArrayList<String> input) {
-		indexes = new ArrayList<Integer>();
+		indices = new ArrayList<Integer>();
 		
 		//ömm ja....
 		words = new ArrayList<String>(Arrays.asList(
@@ -86,7 +86,7 @@ public class WordProcessor implements Constants{
 			for(int j=0; j<words.size(); j++) {
 				if(text.get(i).equals(words.get(j))) {
 					text.remove(i);
-					indexes.add(i);
+					indices.add(i);
 				}
 			}
 		}	
@@ -113,8 +113,8 @@ public class WordProcessor implements Constants{
 		return text;
 	}
 	
-	public ArrayList<Integer> getIndexes(){
-		return indexes;
+	public ArrayList<Integer> getIndices(){
+		return indices;
 	}
 	
 	//ez semmi csak szórakoztam
