@@ -11,14 +11,14 @@ public abstract class Valami {
 	private Network network;
 	
 	//indexek amikhez a szó ki lett törölve
-	private ArrayList<Integer> indexes;
+	private ArrayList<Integer> indeces;
 	
 	//szavakhoz tartozó vektorok
 	private ArrayList<double[]> vectors;
 	
 	public Valami(Network n) {
 		inputvectors = new ArrayList<double[]>();
-		indexes = new ArrayList<Integer>();
+		indeces = new ArrayList<Integer>();
 		vectors = new ArrayList<double[]>();
 		network = n;
 	}
@@ -45,7 +45,7 @@ public abstract class Valami {
 		vectors = wp.getWordVectors();
 		
 		//elkéri a kivett szavak indexeit
-		indexes = wp.getIndexes();
+		indeces = wp.getIndexes();
 	}
 	
 	//hosszú input vektorokat csinál a szavak vektoraiból
@@ -66,8 +66,8 @@ public abstract class Valami {
 		return vectors;
 	}
 	
-	public ArrayList<Integer> getIndexes() {
-		return indexes;
+	public ArrayList<Integer> getIndeces() {
+		return indeces;
 	}
 	
 	public abstract void startNetwork();
