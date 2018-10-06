@@ -3,8 +3,8 @@ package neural;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class Network {
-	private Network_LoadandSave loadsave;
+public class Network implements Constants{
+	private NetworkLoadAndSave loadsave;
 
 	public int[] layer_sizes;
 	public int output_size;
@@ -20,7 +20,7 @@ public class Network {
 	
 	public Network()
 	{
-		layer_sizes = new int[]{15,6,6,6};
+		layer_sizes = new int[]{INPUT_VECTOR,LAYER_1,LAYER_2,NUM_OPTIONS};
 		network_size = layer_sizes.length;
 		input_size = layer_sizes[0];
 		output_size = layer_sizes[network_size-1];
@@ -44,7 +44,7 @@ public class Network {
 			}
 		}
 		
-		loadsave = new Network_LoadandSave(layer_sizes);
+		loadsave = new NetworkLoadAndSave(layer_sizes);
 	}
 	
 	public double[] calculate(double[] inp)
@@ -73,12 +73,12 @@ public class Network {
 		return 1d/(1 + Math.exp(-x));
 	}
 	
-	public void train(double[] inp, double[] target, double eta)
+	public void train(double[] inp, double[] target)
 	{
 		if(inp.length != input_size || target.length != output_size) return;
 		calculate(inp);
 		backpropError(target);
-		updateWeights(eta);
+		updateWeights();
 	}
 	
 	public void backpropError(double[] target)
@@ -103,13 +103,13 @@ public class Network {
 		}
 	}
 	
-	public void updateWeights(double eta)
+	public void updateWeights()
 	{
 		for(int layer = 1; layer < network_size; layer++)
 		{
 			for(int neuron = 0; neuron < layer_sizes[layer]; neuron++)
 			{
-				double delta = -eta * error_signal[layer][neuron];
+				double delta = -ETA * error_signal[layer][neuron];
 				bias[layer][neuron] += delta;
 				for(int prevneuron = 0; prevneuron < layer_sizes[layer-1]; prevneuron++)
 				{
