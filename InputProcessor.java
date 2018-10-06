@@ -10,12 +10,16 @@ public class InputProcessor implements Constants {
 		output = new ArrayList<double []>();
 	}
 	
-	public ArrayList<double []> getInputVectors(ArrayList<double []> input) {
+	//visszaadja a hosszú inputok listáját
+	public ArrayList<double []> createInputVectors(ArrayList<double []> input) {
 		input = filler(input);
 		makeInputVectors(input);
 		return output;
 	}
 	
+	//kitölti a szöveg elejét és végét nullákkal,
+	//hogy az első hosszú input vektor középső szava a szöveg első szava legyen
+	//ugyanígy a végén is
 	public ArrayList<double []> filler(ArrayList<double []> input) {
 		
 		double[] zero = new double[WORD_VECTOR];
@@ -30,6 +34,7 @@ public class InputProcessor implements Constants {
 		return input;
 	}
 	
+	//hosszú vektorokká összefűzzi a valahány bemeneti szó vektorát
 	public void makeInputVectors(ArrayList<double []> input){
 		
 		double[] out = new double[WORDS_WINDOW*WORD_VECTOR];
