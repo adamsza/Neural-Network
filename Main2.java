@@ -1,4 +1,4 @@
-public class Main {
+public class Main2 {
 	
 	public static void main(String[] args) {
 		//csak fájt hogy piros volt mindig, de ez kamu string
