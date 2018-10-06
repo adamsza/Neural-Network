@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class Network_LoadandSave {
+public class NetworkLoadAndSave {
 	
 	private int[] layer_sizes;
 	
-	public Network_LoadandSave(int[] layer_sizes)
+	public NetworkLoadAndSave(int[] layer_sizes)
 	{
 		this.layer_sizes = layer_sizes;
 	}
