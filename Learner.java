@@ -43,7 +43,7 @@ public class Learner extends Valami{
 	//kiveszi azokat a számokat amiknek a szava már ki lett törölve
 	public ArrayList<Integer> fixTargetVectors(ArrayList<Integer> targets) {
 		ArrayList<Integer> idx = new ArrayList<Integer>();
-		idx = getIndexes();
+		idx = getIndeces();
 		for(int i = 0; i<idx.size(); i++) {
 			targets.remove(idx.get(i));
 		}
