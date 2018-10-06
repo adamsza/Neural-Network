@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class TextProcessor {
 	
-	
-	public ArrayList<String> separatewords(String filename) throws IOException
+	//beolvassa a szöveget és szétszedi String listára
+	public ArrayList<String> readWords(String filename) throws IOException
 	{
 		
 		FileReader fr = new FileReader(filename);
@@ -33,19 +33,20 @@ public class TextProcessor {
 		return wordlist;
 	}
 	
-	public ArrayList<Double> separatetargets(String filename) throws IOException
+	//beolvassa a target számokat és Integer listát csinál belőle
+	public ArrayList<Integer> readTargets(String filename) throws IOException
 	{
 		FileReader fr = new FileReader(filename);
 		BufferedReader br = new BufferedReader(fr);
 		boolean q = true;
 		String line = br.readLine();
-		ArrayList<Double> targetlist = new ArrayList<Double>();
+		ArrayList<Integer> targetlist = new ArrayList<Integer>();
 		while(q == true)
 		{
 			String[] sp = line.split(" ");
 			for(int i = 0; i < sp.length; i++)
 			{
-				targetlist.add(Double.parseDouble(sp[i]));
+				targetlist.add(Integer.parseInt(sp[i]));
 			}
 			line = br.readLine();
 			if(line == null) q = false;
@@ -53,4 +54,5 @@ public class TextProcessor {
 		br.close();
 		return targetlist;
 	}
+
 }
