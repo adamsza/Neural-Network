@@ -26,7 +26,7 @@ public class WordProcessor implements Constants{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(words.size());
+		
 		//ömm ja....
 		/*
 		words = new ArrayList<String>(Arrays.asList(
