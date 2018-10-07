@@ -74,7 +74,7 @@ public class WordVector implements Constants{
 		if(Pattern.compile("lak|cím|lc|székhely").matcher(word).find())
 			return 5;
 		//datum
-		if(Pattern.compile("dátum|év|hó|nap").matcher(word).find())
+		if(Pattern.compile("dátum|év|hó|nap|kelt").matcher(word).find())
 			return 6;
 
 		else return 0;
