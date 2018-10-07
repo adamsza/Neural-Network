@@ -1,5 +1,6 @@
 package neural;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -17,7 +18,6 @@ public class WordProcessor implements Constants{
 	private ArrayList<Integer> indices;
 	
 	public WordProcessor(ArrayList<String> input) {
-		public WordProcessor(ArrayList<String> input) {
 		indices = new ArrayList<Integer>();
 		words = new ArrayList<String>();
 		TextProcessor tp = new TextProcessor();
@@ -26,7 +26,7 @@ public class WordProcessor implements Constants{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		//ömm ja....
 		/*
 		words = new ArrayList<String>(Arrays.asList(
@@ -80,8 +80,6 @@ public class WordProcessor implements Constants{
 		for(int i=0; i<input.size(); i++) {
 			text.add(input.get(i));
 		}
-	}
-
 	}
 	
 	//produkció
