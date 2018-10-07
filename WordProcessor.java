@@ -17,9 +17,18 @@ public class WordProcessor implements Constants{
 	private ArrayList<Integer> indices;
 	
 	public WordProcessor(ArrayList<String> input) {
+		public WordProcessor(ArrayList<String> input) {
 		indices = new ArrayList<Integer>();
-		
+		words = new ArrayList<String>();
+		TextProcessor tp = new TextProcessor();
+		try {
+			words = tp.readWords("words.txt");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println(words.size());
 		//ömm ja....
+		/*
 		words = new ArrayList<String>(Arrays.asList(
 				"ahhoz",
 				"akár",
@@ -66,10 +75,13 @@ public class WordProcessor implements Constants{
 				"vagy",
 				"vagyis",
 				"viszont"));
+				*/
 		text = new ArrayList<>();
 		for(int i=0; i<input.size(); i++) {
 			text.add(input.get(i));
 		}
+	}
+
 	}
 	
 	//produkció
