@@ -2,6 +2,7 @@ package neural;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class Valami {
 	//hosszú input vektorok listája
@@ -16,10 +17,13 @@ public abstract class Valami {
 	//szavakhoz tartozó vektorok
 	private ArrayList<double[]> vectors;
 	
+	private ArrayList<String> text;
+	
 	public Valami(Network n) {
 		inputvectors = new ArrayList<double[]>();
 		indices = new ArrayList<Integer>();
 		vectors = new ArrayList<double[]>();
+		text = new ArrayList<String>();
 		network = n;
 	}
 	
@@ -43,6 +47,7 @@ public abstract class Valami {
 		//a Stringekből vektorokat csinál minden szónak
 		WordProcessor wp = new WordProcessor(separated);
 		vectors = wp.getWordVectors();
+		text = wp.getText();
 		
 		//elkéri a kivett szavak indexeit
 		indices = wp.getIndices();
@@ -68,6 +73,10 @@ public abstract class Valami {
 	
 	public ArrayList<Integer> getIndices() {
 		return indices;
+	}
+	
+	public ArrayList<String> getText() {
+		return text;
 	}
 	
 	public abstract void startNetwork();
