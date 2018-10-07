@@ -36,20 +36,19 @@ public class InputProcessor implements Constants {
 	
 	//hosszú vektorokká összefűzzi a valahány bemeneti szó vektorát
 	public void makeInputVectors(ArrayList<double []> input){
-		
-		double[] out = new double[WORDS_WINDOW*WORD_VECTOR];
-		System.out.println(input.size());
+
+		//System.out.println(input.size());
 		for(int i=0; i<(input.size()-(WORDS_WINDOW-1)); i++) {
+			double[] out = new double[WORDS_WINDOW*WORD_VECTOR];
 			for(int j=0; j<WORDS_WINDOW; j++) {
 				for(int k=0; k<WORD_VECTOR; k++) {
 					double[] vec = input.get(i);
 					out[(j*WORD_VECTOR)+k] = vec[k];
 				}
-				System.out.println(output.size());
 			}
 			output.add(out);
+			
 		}
-
 	}
 
 }
