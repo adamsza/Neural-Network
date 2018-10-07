@@ -20,4 +20,7 @@ public interface Constants {
 	//két belső szint
 	public static final int LAYER_1 = 6;
 	public static final int LAYER_2 = 6;
+	
+	//ennel jobb kell hogy legyen a tipp
+	public static final double BOUNDARY = 0.8;
 }
