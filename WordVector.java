@@ -68,10 +68,10 @@ public class WordVector implements Constants{
 		if(Pattern.compile("személy|igazolvány|ig|szám|okmany|azonositó").matcher(word).find())
 			return 3;
 		//adoszam
-		if(Pattern.compile("adószám|azonositó").matcher(word).find())
+		if(Pattern.compile("adószám|azonositó|jel").matcher(word).find())
 			return 4;
 		//lakcim
-		if(Pattern.compile("lak|cím|lc|székhely").matcher(word).find())
+		if(Pattern.compile("lak|cím|lc|szék|hely").matcher(word).find())
 			return 5;
 		//datum
 		if(Pattern.compile("dátum|év|hó|nap|kelt").matcher(word).find())
