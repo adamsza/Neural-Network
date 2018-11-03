@@ -23,7 +23,7 @@ public class Network implements Constants{
 	
 	public Network()
 	{
-		layer_sizes = new int[]{INPUT_VECTOR,LAYER_1,LAYER_2,NUM_OPTIONS};
+		layer_sizes = new int[]{INPUT_VECTOR,LAYER_1,LAYER_2,NUM_NETWORK_OPTIONS};
 		network_size = layer_sizes.length;
 		input_size = layer_sizes[0];
 		output_size = layer_sizes[network_size-1];
