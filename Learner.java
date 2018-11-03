@@ -43,7 +43,7 @@ public class Learner extends Valami{
 			}
 		}
 		for(int i=0; i<NUM_NETWORK; i++) {
-			getNetworks.get(i).train(getTrainSetList().get(i), 10000, 4);
+			getNetworks().get(i).train(getTrainSetList().get(i), 10000, 4);
 		}
 	}
 	
