@@ -2,7 +2,6 @@ package neural;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import network.Network;
 import processor.TargetProcessor;
@@ -13,13 +12,13 @@ public class Learner extends Valami{
 	private String targetfilename;
 	
 
-	public Learner(Network n, String f) {
+	public Learner(ArrayList<Network> n, String f) {
 		super(n);
 		targetfilename = f;
 	}
 	
 
-	public void startNetwork() {
+	public void startNetworks() {
 		//beolvastatja a fileból a target integereket
 		TextProcessor txp = new TextProcessor();
 		ArrayList<Integer> targets = new ArrayList<Integer>();
@@ -30,18 +29,19 @@ public class Learner extends Valami{
 		}
 		
 		//kiveszi azokat a számokat amiknek a szava már ki lett törölve
-		fixTargetVectors(targets);
+		targets = fixTargetVectors(targets);
 		TargetProcessor tp = new TargetProcessor();
-		ArrayList<double[]> targetvectors = new ArrayList<double[]>();
-		targetvectors = tp.makeTargets(targets);
-
-		//hosszú input vektorokat megcsinálja
-		makeInputVectors();
 		
-		//odaadja egyesevel a networknek a hosszú input vektorokat a targettel
-		Network n = getNetwork();
-		for(int i=0; i<getInputVectors().size(); i++) {
-			getTrainSet().addData(getInputVectors().get(i), targetvectors.get(i));
+		ArrayList<ArrayList<double[]>> targetvectors = new ArrayList<ArrayList<double[]>>();
+		targetvectors = tp.makeYesNoTargetsForAllNetworks(targets);
+		
+		
+		
+		for(int i=0; i<NUM_NETWORK; i++) {
+			for(int j = 0; j<getInputVectors().get(i).size(); j++) {
+				getNetworks().get(i).train(getInputVectors().get(i).get(j), targetvectors.get(i).get(j));
+			}
+
 		}
 	}
 	
@@ -49,9 +49,11 @@ public class Learner extends Valami{
 	public ArrayList<Integer> fixTargetVectors(ArrayList<Integer> targets) {
 		ArrayList<Integer> idx = new ArrayList<Integer>();
 		idx = getIndices();
+		
 		for(int i = 0; i<idx.size(); i++) {
-			targets.remove(idx.get(i).intValue());
+			targets.remove((int)idx.get(i));
 		}
+
 		return targets;	
 	}
 	
