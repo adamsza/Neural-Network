@@ -1,6 +1,8 @@
-package neural;
+package processor;
 
 import java.util.ArrayList;
+
+import tools.Constants;
 
 public class InputProcessor implements Constants {
 
@@ -17,8 +19,8 @@ public class InputProcessor implements Constants {
 		return output;
 	}
 	
-	//kitölti a szöveg elejét és végét nullákkal,
-	//hogy az első hosszú input vektor középső szava a szöveg első szava legyen
+	//kitolti a szoveg elejet es veget nullakkal,
+	//hogy az elso hosszu input vektor kozepso szava a szoveg elso szava legyen
 	//ugyanígy a végén is
 	public ArrayList<double []> filler(ArrayList<double []> input) {
 		
@@ -41,8 +43,8 @@ public class InputProcessor implements Constants {
 		for(int i=0; i<(input.size()-(WORDS_WINDOW-1)); i++) {
 			double[] out = new double[WORDS_WINDOW*WORD_VECTOR];
 			for(int j=0; j<WORDS_WINDOW; j++) {
+				double[] vec = input.get(i+j);
 				for(int k=0; k<WORD_VECTOR; k++) {
-					double[] vec = input.get(i);
 					out[(j*WORD_VECTOR)+k] = vec[k];
 				}
 			}

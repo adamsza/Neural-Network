@@ -4,6 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import network.Network;
+import network.TrainSet;
+import processor.InputProcessor;
+import processor.TextProcessor;
+import processor.WordProcessor;
+import tools.Constants;
+
 public abstract class Valami {
 	//hosszú input vektorok listája
 	private ArrayList<double[]> inputvectors;
@@ -19,11 +26,14 @@ public abstract class Valami {
 	
 	private ArrayList<String> text;
 	
+	private TrainSet set;
+	
 	public Valami(Network n) {
 		inputvectors = new ArrayList<double[]>();
 		indices = new ArrayList<Integer>();
 		vectors = new ArrayList<double[]>();
 		text = new ArrayList<String>();
+		set = new TrainSet(Constants.INPUT_VECTOR, Constants.NUM_OPTIONS);
 		network = n;
 	}
 	
@@ -77,6 +87,11 @@ public abstract class Valami {
 	
 	public ArrayList<String> getText() {
 		return text;
+	}
+	
+	public TrainSet getTrainSet()
+	{
+		return set;
 	}
 	
 	public abstract void startNetwork();

@@ -1,6 +1,9 @@
-package neural;
+package processor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import tools.Constants;
 
 public class TargetProcessor implements Constants{
 
@@ -25,6 +28,16 @@ public class TargetProcessor implements Constants{
 				vector[k] = 0;
 			}
 			newtargets.add(vector);
+		}
+		return newtargets;
+	}
+	
+public ArrayList<double[]> newmakeTargets(ArrayList<Integer> targets){
+		
+		ArrayList<double[]> newtargets = new ArrayList<double[]>();
+		for(int i = 0; i<targets.size(); i++) {
+			int digit = targets.get(i);
+			newtargets.add(new double[] {digit});
 		}
 		return newtargets;
 	}

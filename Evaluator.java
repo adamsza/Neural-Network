@@ -2,6 +2,8 @@ package neural;
 
 import java.util.Arrays;
 
+import network.Network;
+
 public class Evaluator extends Valami{
 
 	public Evaluator(Network n) {

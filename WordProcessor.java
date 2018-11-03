@@ -1,8 +1,12 @@
-package neural;
+package processor;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import name.Word2Array;
+import tools.Constants;
+import vectors.WordVector;
 
 public class WordProcessor implements Constants{
 	//szavak amiket ki kell szedni
@@ -107,10 +111,8 @@ public class WordProcessor implements Constants{
 	public void makeWordVectors() {
 		vectors = new ArrayList<>();
 		for(int i=0; i<text.size(); i++) {
-			double j = i+1;
-			double pos = j/text.size();
 			WordVector wordvec = new WordVector(text.get(i));
-			wordvec.makeVector(pos);
+			wordvec.makeVector();
 			vectors.add(wordvec.getVector());
 		}
 	}

@@ -2,6 +2,8 @@ package neural;
 
 import java.util.ArrayList;
 
+import tools.Constants;
+
 public class Classifier implements Constants{
 
 	private ArrayList<String> words;

@@ -2,6 +2,11 @@ package neural;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import network.Network;
+import processor.TargetProcessor;
+import processor.TextProcessor;
 
 public class Learner extends Valami{
 	//válaszok file neve
@@ -36,7 +41,7 @@ public class Learner extends Valami{
 		//odaadja egyesevel a networknek a hosszú input vektorokat a targettel
 		Network n = getNetwork();
 		for(int i=0; i<getInputVectors().size(); i++) {
-			n.train(getInputVectors().get(i), targetvectors.get(i));
+			getTrainSet().addData(getInputVectors().get(i), targetvectors.get(i));
 		}
 	}
 	
@@ -45,7 +50,7 @@ public class Learner extends Valami{
 		ArrayList<Integer> idx = new ArrayList<Integer>();
 		idx = getIndices();
 		for(int i = 0; i<idx.size(); i++) {
-			targets.remove(idx.get(i));
+			targets.remove(idx.get(i).intValue());
 		}
 		return targets;	
 	}
