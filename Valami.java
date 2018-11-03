@@ -38,7 +38,7 @@ public abstract class Valami implements Constants{
 		networklist = n;
 		setlist = new ArrayList<TrainSet>();
 		for(int i = 0; i<NUM_NETWORK; i++) {
-			Trainset set = new TrainSet(INPUT_VECTOR, NUM_NETWORK_OPTIONS);
+			TrainSet set = new TrainSet(INPUT_VECTOR, NUM_NETWORK_OPTIONS);
 			setlist.add(set);
 		}
 	}
