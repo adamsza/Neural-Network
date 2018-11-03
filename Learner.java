@@ -39,9 +39,11 @@ public class Learner extends Valami{
 		
 		for(int i=0; i<NUM_NETWORK; i++) {
 			for(int j = 0; j<getInputVectors().get(i).size(); j++) {
-				getNetworks().get(i).train(getInputVectors().get(i).get(j), targetvectors.get(i).get(j));
+				getTrainSetList().get(i).addData(getInputVectors().get(i).get(j), targetvectors.get(i).get(j));
 			}
-
+		}
+		for(int i=0; i<NUM_NETWORK; i++) {
+			getNetworks.get(i).train(getTrainSetList().get(i), 10000, 4);
 		}
 	}
 	
