@@ -13,16 +13,17 @@ public class InputProcessor implements Constants {
 	}
 	
 	//visszaadja a hosszú inputok listáját
-	public ArrayList<double []> createInputVectors(ArrayList<double []> input) {
-		input = filler(input);
-		makeInputVectors(input);
+	public ArrayList<double []> getInputVectorsForOneNetwork(ArrayList<double []> input) {
+		//System.out.println(input.size());
+		input = fillFrontAndEnd(input);
+		makeLongInputVectors(input);
 		return output;
 	}
 	
-	//kitolti a szoveg elejet es veget nullakkal,
-	//hogy az elso hosszu input vektor kozepso szava a szoveg elso szava legyen
+	//kitölti a szöveg elejét és végét nullákkal,
+	//hogy az első hosszú input vektor középső szava a szöveg első szava legyen
 	//ugyanígy a végén is
-	public ArrayList<double []> filler(ArrayList<double []> input) {
+	public ArrayList<double []> fillFrontAndEnd(ArrayList<double []> input) {
 		
 		double[] zero = new double[WORD_VECTOR];
 		
@@ -32,12 +33,22 @@ public class InputProcessor implements Constants {
 			}
 			input.add(0, zero);
 			input.add(zero);
+			/*
+			zero[0]=1;
+			zero[WORD_VECTOR-1]=1;
+			for(int m=1; m<(WORD_VECTOR-1); m++) {
+				zero[m]=0;
+			}
+			input.add(0, zero);
+			input.add(zero);
+			*/
 		}
+		//System.out.println(input.size());
 		return input;
 	}
 	
 	//hosszú vektorokká összefűzzi a valahány bemeneti szó vektorát
-	public void makeInputVectors(ArrayList<double []> input){
+	public void makeLongInputVectors(ArrayList<double []> input){
 
 		//System.out.println(input.size());
 		for(int i=0; i<(input.size()-(WORDS_WINDOW-1)); i++) {
@@ -51,6 +62,7 @@ public class InputProcessor implements Constants {
 			output.add(out);
 			
 		}
+		//System.out.println(output.size());
 	}
 
 }
