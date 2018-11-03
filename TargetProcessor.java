@@ -1,6 +1,8 @@
-package neural;
+package processor;
 
 import java.util.ArrayList;
+
+import tools.Constants;
 
 public class TargetProcessor implements Constants{
 
@@ -16,6 +18,8 @@ public class TargetProcessor implements Constants{
 		ArrayList<double[]> newtargets = new ArrayList<double[]>();
 		for(int i = 0; i<targets.size(); i++) {
 			int digit = targets.get(i);
+			
+			
 			double[] vector = new double[NUM_OPTIONS];
 			for(int j = 0; j<digit; j++) {
 				vector[j] = 0;
@@ -25,8 +29,37 @@ public class TargetProcessor implements Constants{
 				vector[k] = 0;
 			}
 			newtargets.add(vector);
+			
+			
 		}
+		
 		return newtargets;
+	}
+	
+	public ArrayList<ArrayList<double[]>> makeYesNoTargetsForAllNetworks (ArrayList<Integer> targetlist) {
+		ArrayList<ArrayList<double[]>> newlist = new ArrayList<>();
+		
+		for(int i = 0; i<NUM_NETWORK; i++) {
+			ArrayList<double[]> list = new ArrayList<>();
+			newlist.add(list);
+		}
+		
+		for(int j = 0; j<targetlist.size(); j++) {
+			int curr = targetlist.get(j);
+			for(int k = 0; k<NUM_NETWORK; k++) {
+				double[] db = new double[2];
+				if(k == curr) {
+					db[0] = 0;
+					db[1] = 1;
+				}
+				else {
+					db[0] = 1;
+					db[1] = 0;
+				}
+				newlist.get(k).add(db);
+			}
+		}
+		return newlist;
 	}
 			
 }

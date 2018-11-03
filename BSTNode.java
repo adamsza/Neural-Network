@@ -1,4 +1,4 @@
-package neural;
+package tree;
 
 public class BSTNode
 {

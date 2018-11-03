@@ -1,52 +1,121 @@
 package neural;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import network.Network;
+import processor.TextProcessor;
+import tree.BST;
 
 public class Main {
 	
-	public static double[] vectorization(String toProcess)
-	{
-		String[] splitted = toProcess.split(" ");
-		ArrayList<String> input = new ArrayList<String>();
-		input.add(splitted[0]); input.add(splitted[1]); input.add(splitted[2]);
-		Preprocessor pre = new Preprocessor(input);
-		pre.removeWords();
-		pre.makeWordVectors();
+	public static void main(String[] args) throws IOException {
+		//csak fÃ¡jt hogy piros volt mindig, de ez kamu string
+		//String targetfilename = new String();
+		//String filename = new String();
 		
-		ArrayList<WordVector> vectors = pre.getVectors();
-		double[] in = new double[15];
-		for(int i = 0; i < 3; i++)
-		{
-			for(int j = 0; j < 5; j++)
-			{
-				double[] vec = vectors.get(i).getVector();
-				in[(i*5)+j] = vec[j];
-			}
-		}
-		return in;
-	}
+		
+		//gondolom valami ilyesmi lenne majd amÃºgy a dolog:
 
-	public static void main(String arg[])
-	{
-		Network net = new Network();
+		Network address = new Network();
+		Network type = new Network();
+		Network date = new Network();
+		Network id = new Network();
+		Network name = new Network();
+		Network taxid = new Network();
+		
+		ArrayList<Network> networks = new ArrayList<>();
+		networks.add(address);
+		networks.add(type);
+		networks.add(date);
+		networks.add(id);
+		networks.add(name);
+		networks.add(taxid);
 		
 		
-		double[] target = new double[] {0,1,0,0,0,0};
-		double[] in = vectorization("név: Kovács Péter");
-		net.train(in, target, 0.6);
-		for(int i = 0; i < 100; i++)
-		{
-			net.train(in, target, 0.6);
+		BST bst = new BST();
+		TextProcessor tp = new TextProcessor();
+		ArrayList<String> names = tp.readWords("names.txt");
+		for(int i = 0; i < names.size(); i++) {
+			bst.put(names.get(i), i);
 		}
 		
-		target = new double[] {0,0,1,0,0,0};
-		in = vectorization("személyi: 723342LA lakcím:");
-		net.train(in, target, 0.6);
+		/*
+		try {
+			n.loadState("saved.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		
+		//SZEVASZ HAVER, tanulni akarsz vagy csak darÃ¡lni?
+		
+		//tanulni:
+		//aggyÃ¡ nekem file-t amibÅ‘l kinÃ©zzem a vÃ¡laszokat, kÃ¶szi
 		
 		
-		in = vectorization("Baumann László személyi");
-		double[] out = net.calculate(in);
-		System.out.println(Arrays.toString(out));
+		Valami v1 = new Learner(networks, "target4.txt");
+		for (int i=0; i<10000; i++) {
+			v1.execute("test4.txt");
+		}
+		
+		int i = 9;
+		i = i + 7;
+		
+		//darÃ¡lni:
+		Valami v2 = new Evaluator(networks);
+		v2.execute("test4.txt");
+		
+		/*
+		Valami v3 = new Learner(n, "target2.txt");
+		for (int i=0; i<10000; i++) {
+			v3.execute("test2.txt");
+		}
+		
+		
+		//darÃ¡lni:
+		Valami v4 = new Evaluator(n);
+		v4.execute("test2.txt");
+		
+		Valami v5 = new Learner(n, "target3.txt");
+		for (int i=0; i<10000; i++) {
+			v5.execute("test3.txt");
+		}
+		
+		
+		//darÃ¡lni:
+		Valami v6 = new Evaluator(n);
+		v6.execute("test3.txt");
+		*/
+		
+		/*
+		Valami v7 = new Learner(n, "target.txt");
+		for (int i=0; i<10000; i++) {
+			v7.execute("text.txt");
+		}
+		
+		
+		//darÃ¡lni:
+		Valami v8 = new Evaluator(n);
+		v8.execute("text.txt");
+		
+		
+		
+		try {
+			n.saveState("saved.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		
+		
+		
+
 	}
+	
 }
+
+
+

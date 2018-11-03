@@ -1,8 +1,13 @@
-package neural;
+package processor;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import tools.Constants;
+import vectors.Vectors;
+import vectors.WordVector;
 
 public class WordProcessor implements Constants{
 	//szavak amiket ki kell szedni
@@ -12,7 +17,7 @@ public class WordProcessor implements Constants{
 	private ArrayList<String> text;
 	
 	//szavak vektorai
-	private ArrayList<double[]> vectors;
+	private Vectors vectors;
 	
 	//indexek listája amelyik szavakat kivett
 	private ArrayList<Integer> indices;
@@ -27,55 +32,6 @@ public class WordProcessor implements Constants{
 			e.printStackTrace();
 		}
 
-		//ömm ja....
-		/*
-		words = new ArrayList<String>(Arrays.asList(
-				"ahhoz",
-				"akár",
-				"amennyiben",
-				"azaz",
-				"avagy",
-				"azért",
-				"azonban",
-				"aztán",
-				"ám",
-				"bár",
-				"csak",
-				"csakhogy",
-				"de",
-				"ehhez",
-				"ellenben",
-				"ennélfogva",
-				"eszerint",
-				"ezért",
-				"ha",
-				"hanem",
-				"hát",
-				"hiszen",
-				"hogy",
-				"hogyha",
-				"is",
-				"így",
-				"meg",
-				"mert",
-				"még",
-				"mégis",
-				"mégse",
-				"mintha",
-				"mivel",
-				"míg",
-				"nemcsak",
-				"pedig",
-				"se",
-				"sem",
-				"sőt",
-				"szintén",
-				"tehát",
-				"ugyanis",
-				"vagy",
-				"vagyis",
-				"viszont"));
-				*/
 		text = new ArrayList<>();
 		for(int i=0; i<input.size(); i++) {
 			text.add(input.get(i));
@@ -84,14 +40,14 @@ public class WordProcessor implements Constants{
 	
 	//produkció
 	//kiköpi a szavak vektorainak listáját
-	public ArrayList<double[]> getWordVectors() {
-		removeWords();
-		makeWordVectors();
+	public Vectors getAllWordVectors() {
+		removeUselessWords();
+		makeAllWordsToVectorsForAllNetworks();
 		return vectors;
 	}
 	
 	//kiveszi a haszontalan szavakat
-	public void removeWords() {
+	public void removeUselessWords() {
 		for(int i=0; i<text.size(); i++) {
 			for(int j=0; j<words.size(); j++) {
 				if(text.get(i).equals(words.get(j))) {
@@ -104,18 +60,26 @@ public class WordProcessor implements Constants{
 	
 	//megcsinálja a szavak vektorait egyenként
 	//berakja a listába
-	public void makeWordVectors() {
+	public void makeAllWordsToVectorsForAllNetworks() {
+		vectors = new Vectors();
+		for(int i=0; i<text.size(); i++) {
+			vectors.makeVectorForAllNetworks(text.get(i));
+		}
+		
+		
+		/*
 		vectors = new ArrayList<>();
 		for(int i=0; i<text.size(); i++) {
 			double j = i+1;
 			double pos = j/text.size();
 			WordVector wordvec = new WordVector(text.get(i));
-			wordvec.makeVector(pos);
+			wordvec.makeVector();
 			vectors.add(wordvec.getVector());
 		}
+		*/
 	}
 	
-	public ArrayList<String> getWords(){
+	public ArrayList<String> getUselessWords(){
 		return words;
 	}
 	
@@ -123,11 +87,12 @@ public class WordProcessor implements Constants{
 		return text;
 	}
 	
-	public ArrayList<Integer> getIndices(){
+	public ArrayList<Integer> getRemovedIndices(){
 		return indices;
 	}
 	
 	//ez semmi csak szórakoztam
+	/*
 	public void writeAll() {
 		for(int i = 0; i<vectors.size(); i++) {
 			double[] db = new double[WORD_VECTOR];
@@ -138,5 +103,6 @@ public class WordProcessor implements Constants{
 			System.out.println();
 		}
 	}
+	*/
 
 }

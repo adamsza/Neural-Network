@@ -4,70 +4,95 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class Valami {
+import network.Network;
+import processor.InputProcessor;
+import processor.TextProcessor;
+import processor.WordProcessor;
+import tools.Constants;
+import vectors.Vectors;
+
+public abstract class Valami implements Constants{
 	//hosszú input vektorok listája
-	private ArrayList<double[]> inputvectors;
+	private ArrayList<ArrayList<double[]>> inputvectors;
 	
 	//hálózat
-	private Network network;
+	private ArrayList<Network> networklist;
 	
-	//indexek amikhez a szó ki lett törölve
+	//indexek amikhez a szó ki lett törölvesx
 	private ArrayList<Integer> indices;
 	
 	//szavakhoz tartozó vektorok
-	private ArrayList<double[]> vectors;
+	//private ArrayList<double[]> vectors;
+	private Vectors vectors;
 	
 	private ArrayList<String> text;
 	
-	public Valami(Network n) {
-		inputvectors = new ArrayList<double[]>();
+	public Valami(ArrayList<Network> n) {
+		inputvectors = new ArrayList<ArrayList<double[]>>();
 		indices = new ArrayList<Integer>();
-		vectors = new ArrayList<double[]>();
+		//vectors = new ArrayList<double[]>();
+		vectors = new Vectors();
 		text = new ArrayList<String>();
-		network = n;
+		networklist = n;
 	}
 	
 	//csak elindítja az egész produkciót
 	public void execute(String filename) {
-		makeInput(filename);
-		startNetwork();
+		readTextFromFile(filename);
+		processWordsForAllNetworks(filename);
+		makeInputsForAllNetworks();
+		startNetworks();
 	}
 	
-	//szavak vektorait produkálja
-	public void makeInput(String filename){
-		//a szöveg filenevével meghívja a String lista csinálót
+	
+	public void readTextFromFile(String filename) {
 		TextProcessor tp = new TextProcessor();
-		ArrayList<String> separated = new ArrayList<String>();
 		try{
-		separated = tp.readWords(filename);
+		text = tp.readWords(filename);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	//szavak vektorait produkálja
+	public void processWordsForAllNetworks(String filename){
 		
 		//a Stringekből vektorokat csinál minden szónak
-		WordProcessor wp = new WordProcessor(separated);
-		vectors = wp.getWordVectors();
+		WordProcessor wp = new WordProcessor(text);
+		vectors = wp.getAllWordVectors();
+		//System.out.println(vectors.getVectors().get(0).size());
 		text = wp.getText();
 		
 		//elkéri a kivett szavak indexeit
-		indices = wp.getIndices();
+		indices = wp.getRemovedIndices();
 	}
 	
 	//hosszú input vektorokat csinál a szavak vektoraiból
-	public void makeInputVectors() {
-		InputProcessor ip = new InputProcessor();
-		inputvectors = ip.createInputVectors(vectors);
+	public void makeInputsForAllNetworks() {
+		//System.out.println(NUM_NETWORK);
+		for(int i = 0; i< NUM_NETWORK; i++) {
+			InputProcessor ip = new InputProcessor();
+			ArrayList<double[]> list = new ArrayList<>();
+			list = ip.getInputVectorsForOneNetwork(vectors.getVectors().get(i));
+			inputvectors.add(list);
+			//System.out.println(i);
+			
+		}
+		
+		//System.out.println(inputvectors.get(0).size());
+		//System.out.println(inputvectors.size());
+		
 	}
 	
-	public Network getNetwork() {
-		return network;
+	public ArrayList<Network> getNetworks() {
+		return networklist;
 	}
 	
-	public ArrayList<double[]> getInputVectors() {
+	public ArrayList<ArrayList<double[]>> getInputVectors() {
 		return inputvectors;
 	}
 	
-	public ArrayList<double[]> getVectors() {
+	public Vectors getVectors() {
 		return vectors;
 	}
 	
@@ -79,7 +104,7 @@ public abstract class Valami {
 		return text;
 	}
 	
-	public abstract void startNetwork();
+	public abstract void startNetworks();
 	
 	
 }

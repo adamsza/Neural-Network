@@ -2,6 +2,8 @@ package neural;
 
 import java.util.ArrayList;
 
+import tools.Constants;
+
 public class Classifier implements Constants{
 
 	private ArrayList<String> words;
@@ -21,7 +23,7 @@ public class Classifier implements Constants{
 	
 	public void makeValue(double[] d) {
 		double max = 0;
-		int idx = 0;
+		int idx = -1;
 		for(int i = 0; i<NUM_OPTIONS; i++) {
 			if((d[i] > max) && d[i] > BOUNDARY) {
 				max = d[i];
@@ -34,6 +36,8 @@ public class Classifier implements Constants{
 	
 	public void makeType(int i) {
 		switch(i) {
+		case -1: type.add("nem tudom");
+				break;
 		case 0: type.add("semmi");
 				break;
 		case 1: type.add("fajta");

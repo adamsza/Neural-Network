@@ -1,4 +1,4 @@
-package neural;
+package processor;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

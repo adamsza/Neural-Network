@@ -1,4 +1,4 @@
-package neural;
+package tools;
 
 public class NetworkTools {
 
