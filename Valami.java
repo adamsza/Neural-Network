@@ -111,7 +111,7 @@ public abstract class Valami implements Constants{
 		return text;
 	}
 	
-	public TrainSet getTrainSetList() {
+	public ArrayList<TrainSet> getTrainSetList() {
 		return setlist;
 	}
 	
