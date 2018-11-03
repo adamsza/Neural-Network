@@ -1,7 +1,10 @@
-package neural;
+package network;
 
 import java.io.IOException;
 import java.util.Arrays;
+
+import tools.Constants;
+import tools.NetworkTools;
 
 public class Network implements Constants{
 	private NetworkLoadAndSave loadsave;
@@ -37,10 +40,10 @@ public class Network implements Constants{
 			output[i] = new double[layer_sizes[i]];
 			error_signal[i] = new double[layer_sizes[i]];
 			output_derivative[i] = new double[layer_sizes[i]];
-			bias[i] = NetworkTools.createRandomArray(layer_sizes[i], 0, 1);
+			bias[i] = NetworkTools.createRandomArray(layer_sizes[i], -0.5, 0.7);
 			if(i > 0)
 			{
-				weights[i] = NetworkTools.createRandomArray(layer_sizes[i],layer_sizes[i-1], 0, 1);
+				weights[i] = NetworkTools.createRandomArray(layer_sizes[i],layer_sizes[i-1], -1, 1);
 			}
 		}
 		
@@ -71,6 +74,19 @@ public class Network implements Constants{
 	private double sigmoid(double x)
 	{
 		return 1d/(1 + Math.exp(-x));
+	}
+	
+	public void train(TrainSet set, int loops, int batch_size)
+	{
+		if(set.INPUT_SIZE != input_size || set.OUTPUT_SIZE != output_size) return;
+		for(int i = 0; i < loops; i++)
+		{
+			TrainSet batch = set.extractBatch(batch_size);
+			for(int b = 0; b < batch_size; b++)
+			{
+				this.train(batch.getInput(b), batch.getOutput(b));
+			}
+		}
 	}
 	
 	public void train(double[] inp, double[] target)
