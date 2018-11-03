@@ -27,7 +27,7 @@ public abstract class Valami implements Constants{
 	
 	private ArrayList<String> text;
 	
-	private TrainSet set;
+	private ArrayList<TrainSet> setlist;
 	
 	public Valami(ArrayList<Network> n) {
 		inputvectors = new ArrayList<ArrayList<double[]>>();
@@ -36,7 +36,11 @@ public abstract class Valami implements Constants{
 		vectors = new Vectors();
 		text = new ArrayList<String>();
 		networklist = n;
-		set = new TrainSet(Constants.INPUT_VECTOR, Constants.NUM_NETWORK_OPTIONS);
+		setlist = new ArrayList<TrainSet>();
+		for(int i = 0; i<NUM_NETWORK; i++) {
+			Trainset set = new TrainSet(INPUT_VECTOR, NUM_NETWORK_OPTIONS);
+			setlist.add(set);
+		}
 	}
 	
 	//csak elindítja az egész produkciót
@@ -107,8 +111,8 @@ public abstract class Valami implements Constants{
 		return text;
 	}
 	
-	public TrainSet getTrainSet() {
-		return set;
+	public TrainSet getTrainSetList() {
+		return setlist;
 	}
 	
 	public abstract void startNetworks();
