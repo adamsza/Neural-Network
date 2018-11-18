@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -24,20 +25,23 @@ import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
 import javax.swing.filechooser.FileFilter;
 
+import network.NetworkHolder;
+import neural.Evaluator;
+import tools.TxtFileFilter;
+
 public class GUI extends JFrame {
-	private JTextField szerzodo1 = new JTextField(20);
-	private JTextField szerzodo2 = new JTextField(20);
-	private JTextField lakcim1 = new JTextField(20);
-	private JTextField lakcim2 = new JTextField(20);
-	private JTextField szerzodesfajta = new JTextField(20);
-	private JTextField adoszam = new JTextField(20);
-	private JTextField datum = new JTextField(20);
+	private JTextField[] fields;
 	private JTextField inputfile = new JTextField(40);
 	private FileChooserActionListener choosefile = new FileChooserActionListener(inputfile);
 	private JButton choosefilebutton = new JButton("Choose File");
+	private JButton startbutton = new JButton("Start");
 	
-	public GUI()
+	private Evaluator evaluator;
+	
+	public GUI(Evaluator eval)
 	{
+		evaluator = eval;
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Contract Database");
 		setSize(600, 600);
@@ -46,13 +50,15 @@ public class GUI extends JFrame {
 		SpringLayout layout = new SpringLayout();
 		JPanel datapanel = new JPanel();
 		datapanel.setLayout(layout);
-		String[] labels = {"Szerzõdõ1:", "Szerzõdõ2:", "Lakcím1:", "Lakcím2:", "Szezõdésfajta:", "Adószám:", "Dátum:"};
-		JTextField[] fields = {szerzodo1, szerzodo2, lakcim1, lakcim2, szerzodesfajta, adoszam, datum};
-		
+		String[] labels = {"Szerzõdõ1:", "Lakcím1:", "Személyi1", "Adószám1:", "Szerzõdõ2:", "Lakcím2:", "Személyi2", "Adószám2:", "Szezõdésfajta:", "Dátum:"};
+		fields = new JTextField[10];
+		Container contentPane = getContentPane();
+		int j = 0;
 		for(int i = 0; i < fields.length; i++)
 		{
-			Container contentPane = getContentPane();
-			JTextField f = fields[i];
+			if(i == 4 || i == 8) j++;
+			JTextField f = new JTextField(20);
+			fields[i] = f;
 			f.setEditable(false);
 			JLabel l = new JLabel(labels[i]);
 			datapanel.add(l);
@@ -65,13 +71,24 @@ public class GUI extends JFrame {
                     5,
                     SpringLayout.WEST, contentPane);
 			layout.putConstraint(SpringLayout.NORTH, l,
-                    i*30+5,
+                    j*30+5,
                     SpringLayout.NORTH, contentPane);
 			layout.putConstraint(SpringLayout.NORTH, f,
-                    i*30+5,
-                    SpringLayout.NORTH, contentPane);			
+                    j*30+5,
+                    SpringLayout.NORTH, contentPane);
 			
+			j++;
 		}
+		
+		
+		datapanel.add(startbutton);
+		layout.putConstraint(SpringLayout.EAST, startbutton,
+                -50,
+                SpringLayout.EAST, contentPane);
+		layout.putConstraint(SpringLayout.NORTH, startbutton,
+                190,
+                SpringLayout.NORTH, contentPane);
+		
 		JPanel inputpanel = new JPanel();
 		inputpanel.add(inputfile);
 		choosefilebutton.addActionListener(choosefile);
@@ -89,10 +106,10 @@ public class GUI extends JFrame {
 		update(this.getGraphics());
 	}
 
-	public class ClickActionListener implements ActionListener
+	public class MenuClickActionListener implements ActionListener
 	{
 		private JFrame j;
-		private ClickActionListener(JFrame jj)
+		private MenuClickActionListener(JFrame jj)
 		{
 			j = jj;
 		}
@@ -104,6 +121,25 @@ public class GUI extends JFrame {
 		    j.update(getGraphics());
 		}
 		
+	}
+	
+	public class StartClickActionListener implements ActionListener
+	{
+		
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			evaluator.execute(inputfile.getText());
+			setText(evaluator.getDataList());
+		}
+	}
+	
+	public void setText(ArrayList<String> datalist)
+	{
+		for(int i = 0; i < fields.length; i++)
+		{
+			fields[i].setText(datalist.get(i));
+		}
 	}
 	
 	public class FileChooserActionListener implements ActionListener
@@ -134,17 +170,11 @@ public class GUI extends JFrame {
 	public void menubar() {
 		JMenuBar mb = new JMenuBar();		
 		JMenuItem m1 = new JMenuItem("Add New Data");
-		m1.addActionListener(new ClickActionListener(this));
-		JMenuItem m2 = new JMenuItem("DataBase");
+		m1.addActionListener(new MenuClickActionListener(this));
+		JMenuItem m2 = new JMenuItem("...");
 		mb.add(m1);
 		mb.add(m2);
 		this.setJMenuBar(mb);
 	}
-	
-	public static void main(String[] args)
-	{
-		new GUI();
-	}
-	
-	
+		
 }
