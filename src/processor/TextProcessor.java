@@ -43,10 +43,13 @@ public class TextProcessor {
 		ArrayList<Integer> targetlist = new ArrayList<Integer>();
 		while(q == true)
 		{
-			String[] sp = line.split(" ");
-			for(int i = 0; i < sp.length; i++)
+			if(!line.equals(""))
 			{
-				targetlist.add(Integer.parseInt(sp[i]));
+				String[] sp = line.split(" ");
+				for(int i = 0; i < sp.length; i++)
+				{
+					targetlist.add(Integer.parseInt(sp[i]));
+				}
 			}
 			line = br.readLine();
 			if(line == null) q = false;
